@@ -1,0 +1,42 @@
+{% extends "bootstrap/base.html" %}
+{% block content%}
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        <meta charset="UTF-8">
+        <link data-require="materialize.css@*" data-semver="0.97.8" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" />
+        <script data-require="materialize.css@*" data-semver="0.97.8" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+        <link rel="stylesheet" href="style.css" />
+        <script src="script.js"></script>
+        <title>Title</title>
+    </head>
+    <body>
+    <div class="container" align="center"><img class="mt-5" src="/static/logo.png" height="150" width="150" align="center"></div>
+    <div class="container" align="center"><h3>Scan for Disinformation on a:</h3></div>
+    <div class="container" align="center">
+
+
+                <form class="nobullets" method="post">
+                    {{form.hidden_tag()}}
+                   {% for subfield in form.radiobuttons %}
+                     <tr><td>{{ subfield }}</td><td>{{ subfield.label }}</td><br></tr>{% endfor %}<br>
+                    {{form.inputField}}
+                <br>
+                    {{ form.submit }}
+                </form>
+                <br>
+                <br>
+                <br>
+                {% if averageScore  %}
+                <div method="post"><p>Likelihood of Malicious Activity: {{ averageScore }}</p></div>
+                {% endif %}
+                <table class="highlight, striped" method="post" border="4">
+                    {% for item in range(0, userHandles|length)%}
+                        <tr><td>{{ userHandles[loop.index] }}</td><td>{{ tweetText[loop.index] }}</td><td>{{ averageList[loop.index]}}</td></tr>
+
+                    {% endfor %}
+                </table>
+    </div>
+    </body>
+{% endblock %}
+
+
